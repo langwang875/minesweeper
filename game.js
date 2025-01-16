@@ -70,6 +70,14 @@ class Minesweeper {
     
     createBoard() {
         this.gameBoard.innerHTML = '';
+        this.gameBoard.style.gridTemplateColumns = `repeat(${this.cols}, 30px)`;
+        this.gameBoard.style.gridTemplateRows = `repeat(${this.rows}, 30px)`;
+        
+        if (window.innerWidth <= 768) {
+            this.gameBoard.style.gridTemplateColumns = `repeat(${this.cols}, 35px)`;
+            this.gameBoard.style.gridTemplateRows = `repeat(${this.rows}, 35px)`;
+        }
+        
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.cols; col++) {
                 const cell = document.createElement('div');
