@@ -20,14 +20,16 @@
         <div class="game-container">
             <div class="game-header">
                 <div class="mine-count">99</div>
-                <button id="newGame" class="smiley">🙂</button>
+                <div class="controls">
+                    <button id="flagMode" class="mode-btn" title="切换标记模式">🚩</button>
+                    <button id="newGame" class="smiley">🙂</button>
+                </div>
                 <div class="timer">0</div>
             </div>
             <div id="gameBoard" class="game-board"></div>
         </div>
         <div class="controls-hint">
-            <p>长按: 标记地雷</p>
-            <p>双击: 快速展开</p>
+            <p>点击🚩按钮切换标记模式</p>
         </div>
     </div>
     <script src="game.js"></script>

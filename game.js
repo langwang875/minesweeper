@@ -22,8 +22,12 @@ class Minesweeper {
         this.mineCounter = document.querySelector('.mine-count');
         this.timerDisplay = document.querySelector('.timer');
         this.newGameBtn = document.getElementById('newGame');
+        this.flagModeBtn = document.getElementById('flagMode');
+        
+        this.isFlagMode = false;
         
         this.newGameBtn.addEventListener('click', () => this.startNewGame());
+        this.flagModeBtn.addEventListener('click', () => this.toggleFlagMode());
         
         // 自动调整游戏板大小
         this.adjustBoardSize();
@@ -85,15 +89,20 @@ class Minesweeper {
                 cell.dataset.row = row;
                 cell.dataset.col = col;
                 
-                // 添加触摸事件监听
-                cell.addEventListener('touchstart', (e) => this.handleTouchStart(e, row, col));
-                cell.addEventListener('touchend', (e) => this.handleTouchEnd(e, row, col));
-                cell.addEventListener('touchmove', (e) => this.handleTouchMove(e));
-                cell.addEventListener('contextmenu', (e) => e.preventDefault());
+                // 简化事件监听，只使用点击事件
+                cell.addEventListener('click', (e) => {
+                    if (this.isFlagMode) {
+                        this.handleRightClick(row, col);
+                    } else {
+                        this.handleClick(row, col);
+                    }
+                });
                 
-                // 保留鼠标事件支持
-                cell.addEventListener('click', (e) => this.handleClick(row, col));
                 cell.addEventListener('dblclick', (e) => this.handleDoubleClick(row, col));
+                cell.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    this.handleRightClick(row, col);
+                });
                 
                 this.gameBoard.appendChild(cell);
             }
@@ -109,6 +118,8 @@ class Minesweeper {
         // 设置长按定时器
         this.touchTimeout = setTimeout(() => {
             this.handleRightClick(row, col);
+            // 添加标记以防止触发点击事件
+            this.isLongPress = true;
         }, 500);
     }
     
@@ -125,6 +136,7 @@ class Minesweeper {
             if (moveDistance > 10) {
                 clearTimeout(this.touchTimeout);
                 this.touchTimeout = null;
+                this.isLongPress = false;
             }
         }
     }
@@ -140,7 +152,7 @@ class Minesweeper {
         }
         
         // 如果不是长按，则处理点击
-        if (touchDuration < 500) {
+        if (!this.isLongPress && touchDuration < 500) {
             const currentTime = Date.now();
             const tapLength = currentTime - this.lastTapTime;
             
@@ -154,6 +166,9 @@ class Minesweeper {
                 this.lastTapTime = currentTime;
             }
         }
+        
+        // 重置长按标记
+        this.isLongPress = false;
     }
     
     placeMines(firstRow, firstCol) {
@@ -229,7 +244,14 @@ class Minesweeper {
             this.mineCount++;
         }
         
-        this.mineCounter.textContent = String(this.mineCount).padStart(3, '0');
+        this.mineCounter.textContent = String(Math.max(0, this.mineCount)).padStart(3, '0');
+        
+        // 检查是否获胜
+        if (this.checkWin()) {
+            this.newGameBtn.textContent = '😎';
+            clearInterval(this.timerInterval);
+            this.gameOver = true;
+        }
     }
     
     revealCell(row, col) {
@@ -345,6 +367,11 @@ class Minesweeper {
                 }
             }
         }
+    }
+    
+    toggleFlagMode() {
+        this.isFlagMode = !this.isFlagMode;
+        this.flagModeBtn.classList.toggle('active', this.isFlagMode);
     }
 }
 
