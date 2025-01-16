@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000080">
+    <title>扫雷</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <div class="game-window">
+        <div class="window-header">
+            <div class="title">扫雷</div>
+        </div>
+        <div class="game-container">
+            <div class="game-header">
+                <div class="mine-count">99</div>
+                <button id="newGame" class="smiley">🙂</button>
+                <div class="timer">0</div>
+            </div>
+            <div id="gameBoard" class="game-board"></div>
+        </div>
+        <div class="controls-hint">
+            <p>长按: 标记地雷</p>
+            <p>双击: 快速展开</p>
+        </div>
+    </div>
+    <script src="game.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registered');
+                })
+                .catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        }
+    </script>
+</body>
+</html> 

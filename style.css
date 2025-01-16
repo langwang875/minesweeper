@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #008080;
+    font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+.game-window {
+    background-color: #c0c0c0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.window-header {
+    background-color: #000080;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.game-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #c0c0c0;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+    margin-bottom: 10px;
+    border: 3px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    background-color: #c0c0c0;
+}
+
+.mine-count, .timer {
+    background-color: #000;
+    color: #ff0000;
+    padding: 4px 8px;
+    font-family: monospace;
+    font-size: 24px;
+    min-width: 60px;
+    text-align: center;
+    border: 2px solid #808080;
+}
+
+.smiley {
+    width: 40px;
+    height: 40px;
+    border: 3px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    background-color: #c0c0c0;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.smiley:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.game-board {
+    flex: 1;
+    display: grid;
+    gap: 1px;
+    border: 3px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    background-color: #c0c0c0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 10px;
+}
+
+.cell {
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    user-select: none;
+    touch-action: none;
+}
+
+.cell.revealed {
+    border: 1px solid #808080;
+    background-color: #c0c0c0;
+    border-color: #808080;
+}
+
+.cell.mine {
+    background-color: #ff0000;
+}
+
+.cell.flagged {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red"><path d="M4,2H6V22H4V2M7,4H14L18,8V14L14,18H7V4Z"/></svg>');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.controls-hint {
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    background-color: #c0c0c0;
+    border-top: 1px solid #808080;
+} 
